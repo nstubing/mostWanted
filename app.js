@@ -3,10 +3,12 @@ Build all of your functions for displaying and gathering information below (GUI)
 */
 
 // app is the function called to start the entire application
+var people=data/*[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,17,18,19,20,21]*/
 function app(people){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
+    searchByName(people);
     // TODO: search by name
     break;
     case 'no':
@@ -91,9 +93,14 @@ function mainMenu(person, people){
 function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
-
+  let person= people.filter(function (el){
+  if ((el.firstName.toLowerCase()===firstName) && (el.lastName.toLowerCase()===lastName)){
+    return true
+  }
+  });
+  displayPerson(person);
+  return person;
   // TODO: find the person using the name they entered
-
 }
 
 // alerts a list of people
@@ -106,8 +113,8 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  var personInfo = "First Name: " + person[0].firstName + "\n";
+  personInfo += "Last Name: " + person[0].lastName + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
