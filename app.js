@@ -75,9 +75,11 @@ function mainMenu(person, people){
     // TODO: get person's info
     break;
     case "family":
+    // displayFamily(person);
     // TODO: get person's family
     break;
     case "descendants":
+      displayDescendants(person);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -126,6 +128,31 @@ function displayPerson(person){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
+
+function displayDescendants(person){
+  var personInfo = "First Name: " + person[0].firstName + "\n";
+  personInfo += "Last Name: " + person[0].lastName + "\n";
+  personInfo += "descendants: " + getDescendants(person) + "\n";
+
+
+
+  alert(personInfo);
+
+
+}
+
+function getDescendants (person){
+   var descendants = people.filter(function (el){
+    if ((el.parents[0] === person[0].id) || (el.parents[1] === person[0])){
+    return "el.firstname + el.lastname";
+    }
+  });
+  return descendants;
+}
+//
+// let person= people.filter(function (el){
+// if ((el.firstName.toLowerCase()===firstName) && (el.lastName.toLowerCase()===lastName)){
+
 // function that prompts and validates user input
 function promptFor(question, valid){
   do{
