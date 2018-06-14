@@ -132,7 +132,7 @@ function displayPerson(person){
 function displayDescendants(person){
   var personInfo = "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
-  personInfo += "descendants: " + getDescendants(person) + "\n";
+  personInfo += "Descendants: " + getDescendants(person) + "\n";
 
 
 
@@ -142,18 +142,19 @@ function displayDescendants(person){
 }
 
 function getDescendants (person){
+  let descendantString=""
    var descendants = people.filter(function (el){
-    if ((el.parents[0] === person[0].id) || (el.parents[1] === person[0])){
-    return "el.firstname + el.lastname";
-    }
-  });
-  return descendants;
+    if ((el.parents[0] === person[0].id) || (el.parents[1] === person[0].id)){
+    return el;
+    // return el.parents[0] === person[0].id || el.parents[1] === person[0].id;
 }
-//
-// let person= people.filter(function (el){
-// if ((el.firstName.toLowerCase()===firstName) && (el.lastName.toLowerCase()===lastName)){
+  });
+    for (i=0;i<descendants.length;i++){
+      descendantString+=descendants[i].firstName+" "+ descendants[i].lastName+ ". "
+    }
+  return descendantString;
+}
 
-// function that prompts and validates user input
 function promptFor(question, valid){
   do{
     var response = prompt(question).trim();
