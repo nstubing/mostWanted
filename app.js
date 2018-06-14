@@ -68,10 +68,10 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
-
+  var displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
   switch(displayOption){
     case "info":
+       displayPerson(person);
     // TODO: get person's info
     break;
     case "family":
@@ -98,7 +98,7 @@ function searchByName(people){
     return true
   }
   });
-  displayPerson(person);
+  mainMenu(person,people);
   return person;
   // TODO: find the person using the name they entered
 }
@@ -115,10 +115,17 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
+  personInfo+= "gender: " + person[0].gender + "\n";
+  personInfo+= "dob: " + person[0].dob + "\n";
+  personInfo+= "height: " + person[0].height + "\n";
+  personInfo+= "weight: " + person[0].weight + "\n";
+  personInfo+= "eyeColor: " + person[0].eyeColor + "\n";
+  personInfo+= "occupation: " + person[0].occupation + "\n";
+  personInfo+= "parents: " + person[0].parents + "\n";
+  personInfo+= "currentSpouse: " + person[0].currentSpouse + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-
 // function that prompts and validates user input
 function promptFor(question, valid){
   do{
@@ -136,3 +143,4 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
