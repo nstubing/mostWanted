@@ -37,7 +37,7 @@ function searchByTraits(people) {
       alert("You entered an invalid search type! Please try again.");
       searchByTraits(people);
       break;
-  }  
+  }
 
   let foundPerson = filteredPeople[0];
 
@@ -117,8 +117,8 @@ function displayPerson(person){
   personInfo += "Last Name: " + person[0].lastName + "\n";
   personInfo+= "gender: " + person[0].gender + "\n";
   personInfo+= "dob: " + person[0].dob + "\n";
-  personInfo+= "height: " + person[0].height + "\n";
-  personInfo+= "weight: " + person[0].weight + "\n";
+  personInfo+= "height inches: " + person[0].height + "\n";
+  personInfo+= "weight lbs: " + person[0].weight + "\n";
   personInfo+= "eyeColor: " + person[0].eyeColor + "\n";
   personInfo+= "occupation: " + person[0].occupation + "\n";
   personInfo+= "parents: " + person[0].parents + "\n";
@@ -143,4 +143,3 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
-
