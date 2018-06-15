@@ -132,10 +132,7 @@ function displayPerson(person){
 function displayDescendants(person){
   var personInfo = "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
-<<<<<<< HEAD
-
-=======
->>>>>>> 4bfb2c2b0943d5c95e3917274c1fda94db299240
+  person=personToObject(person);
   personInfo += "Descendants: " + getDescendants(person) + "\n";
 
 
@@ -148,7 +145,6 @@ function displayDescendants(person){
 function getDescendants (person){
 /*  let descendantString=""*/
 /*    let descendantCounter=0;*/
-  person=personToObject(person);
   let array=[];
   let descendantList=array.concat(descendantFinder(person));
   array = descendantList;
@@ -182,7 +178,6 @@ function descendantsToString(array){
   }
 return descendantString
 }
-
 function promptFor(question, valid){
   do{
     var response = prompt(question).trim();
