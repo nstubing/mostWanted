@@ -3,8 +3,9 @@ Build all of your functions for displaying and gathering information below (GUI)
 */
 
 // app is the function called to start the entire application
-var people=data/*[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,17,18,19,20,21]*/
-function app(people){
+/*[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,17,18,19,20,21]*/
+function app(data){
+  people = data
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
@@ -132,6 +133,7 @@ function displayPerson(person){
 function displayDescendants(person){
   var personInfo = "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
+
   personInfo += "Descendants: " + getDescendants(person) + "\n";
 
 
@@ -178,6 +180,7 @@ function descendantsToString(array){
   }
 return descendantString
 }
+
 function promptFor(question, valid){
   do{
     var response = prompt(question).trim();
