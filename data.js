@@ -179,7 +179,7 @@ const data = [
 		"weight": 235,
 		"eyeColor": "hazel",
 		"occupation": "landscaper",
-		"parents": [629807187, 464142841],jmu
+		"parents": [629807187, 464142841],
 		"currentSpouse": null
 	},
 	{

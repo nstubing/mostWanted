@@ -1,9 +1,7 @@
-/*
-Build all of your functions for displaying and gathering information below (GUI).
-*/
+
 
 // app is the function called to start the entire application
-var people=data/*[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,17,18,19,20,21]*/
+var people=data//[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,17,18,19,20,21]
 function app(people){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
@@ -79,7 +77,7 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-      displayDescendants(person);
+      displayDescendants(person[0]);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -130,8 +128,8 @@ function displayPerson(person){
 }
 
 function displayDescendants(person){
-  var personInfo = "First Name: " + person[0].firstName + "\n";
-  personInfo += "Last Name: " + person[0].lastName + "\n";
+  var personInfo = "First Name: " + person.firstName + "\n";
+  personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Descendants: " + getDescendants(person) + "\n";
 
 
@@ -142,18 +140,30 @@ function displayDescendants(person){
 }
 
 function getDescendants (person){
-  let descendantString=""
-   var descendants = people.filter(function (el){
-    if ((el.parents[0] === person[0].id) || (el.parents[1] === person[0].id)){
+  // var descendantString=""
+   let descendants = people.filter(function (el){
+    if ((el.parents[0] === person.id) || (el.parents[1] === person.id) ) {
+    //console.log(el);
     return el;
-    // return el.parents[0] === person[0].id || el.parents[1] === person[0].id;
 }
   });
+
+    // for (i=0;i<descendants.length;i++){
+    //   descendantString+=descendants[i].firstName+" "+ descendants[i].lastName+ ". "
+    // }k,
+
+    // let x = arr1.concat(arr2) javascript documentation?
+debugger;
     for (i=0;i<descendants.length;i++){
-      descendantString+=descendants[i].firstName+" "+ descendants[i].lastName+ ". "
+    var descendantString =   descendants.concat(getDescendants (descendants[i]));
+        //descendantString+=descendants[1].firstName+ " "+ descendants[i].lastName+ ". "
     }
-  return descendantString;
+
+
+  // return descendantString;
+  return descendants;
 }
+
 
 function promptFor(question, valid){
   do{
