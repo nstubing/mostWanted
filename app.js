@@ -26,19 +26,28 @@ function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople=[];
   userInputFilter(userSearchChoice,filteredPeople,people);
-  
-
+  userSearchChoice=prompt("We found "+filteredPeople.length+" people. If you are done type 'done' if not, add another trait! 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
+  if (userSearchChoice==="done"){
+    if(filteredPeople.length===0){
+      displayPerson(filteredPeople);
+    }
+    else {
+      displayPeople(filteredPeople);
+    }
+  }
+  else{
+    userInputFilter(userSearchChoice,filteredPeople,people);
+  }
   let person = filteredPeople[0];
 
   mainMenu(person, people);
 
 }
-function searchByHeight(people) {
+function searchByHeight(people,filteredPeople) {
   let userInputHeight = prompt("How tall is the person?");
-
   let heightArray = people.filter(function (el) {
-    if(el.height == userInputHeight) {
-      return true;
+    if(el.height==  userInputHeight) {
+      filteredPeople.push(el);
     }
     // return true if el.height matches userInputHeight
   });
@@ -129,22 +138,22 @@ let dobInfo= el.dob.split("/");
 function userInputFilter(userSearchChoice,filteredPeople,people){
   switch(userSearchChoice) {
     case "height":
-      filteredPeople = filteredPeople.concat(searchByHeight(people));
+      filteredPeople = searchByHeight(people,filteredPeople);
       break;
     case "weight":
-      filteredPeople = filteredPeople.concat(searchByWeight(people));
+      filteredPeople = searchByWeight(people);
       break;
     case "eye color":
-      filteredPeople = filteredPeople.concat(searchByEyeColor(people));
+      filteredPeople = searchByEyeColor(people);
       break;
     case "gender":
-      filteredPeople = filteredPeople.concat(searchByGender(people));
+      filteredPeople = searchByGender(people);
       break;
     case "age":
-      filteredPeople = filteredPeople.concat(searchByAge(people));
+      filteredPeople = searchByAge(people);
       break;
     case "occupation":
-      filteredPeople = filteredPeople.concat(earchByOccupation(people));
+      filteredPeople = searchByOccupation(people);
       break;
     // so on and so forth
     default:
@@ -203,24 +212,37 @@ function searchByName(people){
 
 // alerts a list of people
 function displayPeople(people){
-  alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
+ let personInfo="";
+ for(i=0;i<people.length;i++){
+  personInfo+= "First Name: " + people[i].firstName + "<br>";
+  personInfo+= "Last Name: " + people[i].lastName + "\n";
+  personInfo+= "gender: " + people[i].gender + "\n";
+  personInfo+= "dob: " + people[i].dob + "\n";
+  personInfo+= "height inches: " + people[i].height + "\n";
+  personInfo+= "weight lbs: " + people[i].weight + "\n";
+  personInfo+= "eyeColor: " + people[i].eyeColor + "\n";
+  personInfo+= "occupation: " + people[i].occupation + "\n";
+  personInfo+= "parents: " + people[i].parents + "\n";
+  personInfo+= "currentSpouse: " + people[i].currentSpouse + "\n";
+  personInfo+= "\n";
+  // TODO: finish getting the rest of the information to display
+  document.getElementById("peopleDisplay").innerHTML=personInfo;
+  }
 }
 
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: " + person[0].firstName + "\n";
-  personInfo += "Last Name: " + person[0].lastName + "\n";
-  personInfo+= "gender: " + person[0].gender + "\n";
-  personInfo+= "dob: " + person[0].dob + "\n";
-  personInfo+= "height inches: " + person[0].height + "\n";
-  personInfo+= "weight lbs: " + person[0].weight + "\n";
-  personInfo+= "eyeColor: " + person[0].eyeColor + "\n";
-  personInfo+= "occupation: " + person[0].occupation + "\n";
-  personInfo+= "parents: " + person[0].parents + "\n";
-  personInfo+= "currentSpouse: " + person[0].currentSpouse + "\n";
+  var personInfo = "First Name: " + person.firstName + "<br>";
+  personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo+= "gender: " + person.gender + "\n";
+  personInfo+= "dob: " + person.dob + "\n";
+  personInfo+= "height inches: " + person.height + "\n";
+  personInfo+= "weight lbs: " + person.weight + "\n";
+  personInfo+= "eyeColor: " + person.eyeColor + "\n";
+  personInfo+= "occupation: " + person.occupation + "\n";
+  personInfo+= "parents: " + person.parents + "\n";
+  personInfo+= "currentSpouse: " + person.currentSpouse + "\n";
   personInfo+= "\n";
   // TODO: finish getting the rest of the information to display
   document.getElementById("peopleDisplay").innerHTML=personInfo;
@@ -282,7 +304,7 @@ return descendantString
 
 function promptFor(question, valid){
   do{
-    var response = prompt(question).trim();
+    var response = prompt(question)/*.trim();*/;
   } while(!response || !valid(response));
   return response;
 }
