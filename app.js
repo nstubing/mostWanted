@@ -132,7 +132,8 @@ function displayPerson(person){
 function displayDescendants(person){
   var personInfo = "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
-  personInfo += "descendants: " + getDescendants(person) + "\n";
+  person=personToObject(person);
+  personInfo += "Descendants: " + getDescendants(person) + "\n";
 
 
 
@@ -142,18 +143,41 @@ function displayDescendants(person){
 }
 
 function getDescendants (person){
-   var descendants = people.filter(function (el){
-    if ((el.parents[0] === person[0].id) || (el.parents[1] === person[0])){
-    return "el.firstname + el.lastname";
+/*  let descendantString=""*/
+/*    let descendantCounter=0;*/
+  let array=[];
+  let descendantList=array.concat(descendantFinder(person));
+  array = descendantList;
+  if (descendantList.length>0){
+    for(j=0;j<descendantList.length;j++){
+      array=array.concat(descendantFinder(descendantList[j]));
     }
-  });
-  return descendants;
+  }  
+  let descendantWords=descendantsToString(array)
+  return descendantWords;
 }
-//
-// let person= people.filter(function (el){
-// if ((el.firstName.toLowerCase()===firstName) && (el.lastName.toLowerCase()===lastName)){
-
-// function that prompts and validates user input
+function descendantFinder(person){
+  newDescendantList=[];
+  for(i=0;i<people.length;i++){
+    if (people[i].parents[0]===person.id||people[i].parents[1]===person.id){
+      newDescendantList.push(people[i]);
+    }
+  }
+return newDescendantList;
+}
+function personToObject(person){
+  let personObject={
+    id:person[0].id
+  }
+  return personObject;
+}
+function descendantsToString(array){
+  descendantString="";
+  for(i=0;i<array.length;i++){
+    descendantString+=array[i].firstName+" "+array[i].lastName+". "
+  }
+return descendantString
+}
 function promptFor(question, valid){
   do{
     var response = prompt(question).trim();
