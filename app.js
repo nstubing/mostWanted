@@ -42,27 +42,26 @@ function peopleFilterDuplicates(filteredPeople){
 return secondaryFilter
 
 }
-function traitSearcher(filteredPeople,People){
-/*  if(filteredPeople.length===0){
-    alert("No matches found! Press OK to start over.")
-    searchByTraits(people);
-  }*/
-  if(filteredPeople.length===1){
-      mainMenu(filteredPeople,People);
-  }
-  else{
-    userSearchChoice=prompt("We found "+filteredPeople.length+" people. If you are done type 'done' if not, add another trait! 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
-    if (userSearchChoice==="done"){
-        displayPeople(filteredPeople);
-    }
-    else{
-      userInputFilter(userSearchChoice,filteredPeople,people);
-    filteredPeople = peopleFilterDuplicates(filteredPeople);
-    traitSearcher(filteredPeople,people)
-    }
-  }
+function traitSearcher(filteredPeople,people){
+ if(filteredPeople.length===0){
+   alert("We did not find anybody that matches your traits, press ok to restart!")
+   searchByTraits(people);
+ }
+ else if(filteredPeople.length===1){
+     mainMenu(filteredPeople,people);
+ }
+ else{
+   userSearchChoice=prompt("We found "+filteredPeople.length+" people. If you are done type 'done' if not, add another trait! 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
+   if (userSearchChoice==="done"){
+       displayPeople(filteredPeople);
+   }
+   else{
+     userInputFilter(userSearchChoice,filteredPeople,people);
+     filteredPeople = peopleFilterDuplicates(filteredPeople);
+     traitSearcher(filteredPeople,people)
+   }
+ }
 }
-
 
 function searchByHeight(people,filteredPeople) {
   let userInputHeight = prompt("How tall is the person?");
@@ -237,6 +236,8 @@ for(i=0;i<people.length;i++){
  personInfo+= "Current Spouse: " + people[i].currentSpouse + "<br>";
  personInfo+= "<br>";
  // TODO: finish getting the rest of the information to display
+
+ document.getElementById("peopleDisplay").style.display = 'block';
  document.getElementById("peopleDisplay").innerHTML=personInfo;
  }
 }
@@ -256,6 +257,7 @@ function displayPerson(person){
  personInfo+= "CurrentSpouse: " + person[0].currentSpouse + "<br>";
  personInfo+= "<br>";
  // TODO: finish getting the rest of the information to display
+ document.getElementById("peopleDisplay").style.display = 'block';
  document.getElementById("peopleDisplay").innerHTML=personInfo;
 }
 
@@ -267,6 +269,7 @@ function displayFamily(person,people){
  personInfo += "Spouse: " + getSpouse(person,people) + "<br>";
  personInfo += "Children: " + getDescendants(person) + "<br>";
 
+ document.getElementById("peopleDisplay").style.display = 'block';
  document.getElementById("peopleDisplay").innerHTML=personInfo;
 
 }
@@ -309,6 +312,10 @@ function getParents(person,people){
       }
     }
   }
+  if (parents===""){
+    parents+= "None."
+  }
+
   return parents
 }
 
@@ -318,6 +325,7 @@ function displayDescendants(person){
  personInfo += "Last Name: " + person[0].lastName + "<br>";
  personInfo += "Descendants: " + getDescendants(person) + "<br>";
 
+ document.getElementById("peopleDisplay").style.display = 'block';
  document.getElementById("peopleDisplay").innerHTML=personInfo;
 }
 
