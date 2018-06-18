@@ -43,6 +43,10 @@ return secondaryFilter
 
 }
 function traitSearcher(filteredPeople,People){
+/*  if(filteredPeople.length===0){
+    alert("No matches found! Press OK to start over.")
+    searchByTraits(people);
+  }*/
   if(filteredPeople.length===1){
       mainMenu(filteredPeople,People);
   }
@@ -103,7 +107,7 @@ function searchByGender(people,filteredPeople) {
 function searchByOccupation(people, filteredPeople) {
   let userInputOccupation = prompt("What is your person occupation?");
 
-  let newArray = people.filter(function (el) {
+  let newArray = people.map(function (el) {
     if(el.occupation == userInputOccupation) {
       filteredPeople.push(el);
     }
@@ -187,7 +191,7 @@ function mainMenu(person, people){
     // TODO: get person's info
     break;
     case "family":
-    // displayFamily(person);
+      displayFamily(person,people);
     // TODO: get person's family
     break;
     case "descendants":
@@ -255,6 +259,60 @@ function displayPerson(person){
  document.getElementById("peopleDisplay").innerHTML=personInfo;
 }
 
+function displayFamily(person,people){
+  var personInfo = "First Name: " + person[0].firstName + "<br>";
+ personInfo += "Last Name: " + person[0].lastName + "<br>";
+ personInfo += "Parents: " + getParents(person,people) + "<br>";
+ personInfo += "Siblings: " + getSiblings(person,people) + "<br>";
+ personInfo += "Spouse: " + getSpouse(person,people) + "<br>";
+ personInfo += "Children: " + getDescendants(person) + "<br>";
+
+ document.getElementById("peopleDisplay").innerHTML=personInfo;
+
+}
+function getSiblings(person,people){
+  siblings=""
+  let siblingCount=0
+  for(e=0;e<people.length;e++){
+    if((person[0].parents[0]===people[e].parents[0])&&(person[0].id!==people[e].id)){
+      siblings+=people[e].firstName+" "+people[e].lastName+". ";
+      siblingCount++
+    }
+  }
+  if(siblingCount===0){
+    siblings+="None.";
+  }
+  return siblings
+}
+function getSpouse(person,people){
+  spouse=""
+  if(person[0].currentSpouse==null){
+    spouse+="None."
+  }
+  else{
+      for(s=0;s<people.length;s++){
+        if(person[0].currentSpouse===people[s].id){
+          spouse+=people[s].firstName+" "+people[s].lastName+". ";
+        }
+      }
+    }
+  return spouse
+}
+
+function getParents(person,people){
+  parents=""
+  for(q=0;q<person[0].parents.length;q++){
+    currentParentID=person[0].parents[q]
+    for(t=0;t<people.length;t++){
+      if(currentParentID===people[t].id){
+        parents+=people[t].firstName+" "+people[t].lastName+". ";
+      }
+    }
+  }
+  return parents
+}
+
+
 function displayDescendants(person){
  var personInfo = "First Name: " + person[0].firstName + "<br>";
  personInfo += "Last Name: " + person[0].lastName + "<br>";
@@ -297,10 +355,16 @@ function personToObject(person){
   return personObject;
 }
 function descendantsToString(array){
-  descendantString="";
-  for(i=0;i<array.length;i++){
-    descendantString+=array[i].firstName+" "+array[i].lastName+". "
+    descendantString="";
+  if(array.length===0){
+    descendantString+="None."
   }
+  else{
+    for(i=0;i<array.length;i++){
+      descendantString+=array[i].firstName+" "+array[i].lastName+". "
+    }
+  }
+
 return descendantString
 }
 
