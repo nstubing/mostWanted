@@ -26,23 +26,40 @@ function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople=[];
   userInputFilter(userSearchChoice,filteredPeople,people);
-  userSearchChoice=prompt("We found "+filteredPeople.length+" people. If you are done type 'done' if not, add another trait! 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
-  if (userSearchChoice==="done"){
-    if(filteredPeople.length===0){
-      displayPerson(filteredPeople);
-    }
-    else {
-      displayPeople(filteredPeople);
-    }
-  }
-  else{
-    userInputFilter(userSearchChoice,filteredPeople,people);
-  }
-  let person = filteredPeople[0];
+  traitSearcher(filteredPeople,people);
+}
+function peopleFilterDuplicates(filteredPeople){
+  secondaryFilter=[];
+  for(p=0;p<filteredPeople.length-1;p++){
+    for(m=p+1;m<filteredPeople.length;m++){
+      if(filteredPeople[p].id===filteredPeople[m].id){
+        secondaryFilter.push(filteredPeople[m])
 
-  mainMenu(person, people);
+      }
+    }
+  }
+
+return secondaryFilter
 
 }
+function traitSearcher(filteredPeople,People){
+  if(filteredPeople.length===1){
+      mainMenu(filteredPeople,People);
+  }
+  else{
+    userSearchChoice=prompt("We found "+filteredPeople.length+" people. If you are done type 'done' if not, add another trait! 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
+    if (userSearchChoice==="done"){
+        displayPeople(filteredPeople);
+    }
+    else{
+      userInputFilter(userSearchChoice,filteredPeople,people);
+    }
+    filteredPeople = peopleFilterDuplicates(filteredPeople);
+    traitSearcher(filteredPeople,people)
+  }
+}
+
+
 function searchByHeight(people,filteredPeople) {
   let userInputHeight = prompt("How tall is the person?");
   let heightArray = people.filter(function (el) {
@@ -51,59 +68,49 @@ function searchByHeight(people,filteredPeople) {
     }
     // return true if el.height matches userInputHeight
   });
-
-  return heightArray;
 }
 
-function searchByWeight(people) {
+function searchByWeight(people, filteredPeople) {
   let userInputWeight = prompt("How much does the person weigh?");
 
   let newArray = people.filter(function (el) {
     if(el.weight == userInputWeight) {
-      return true;
+      filteredPeople.push(el);
     }
     // return true if el.height matches userInputHeight
   });
-
-  return newArray;
 }
-function searchByEyeColor(people) {
+function searchByEyeColor(people,filteredPeople) {
   let userInputEyeColor = prompt("What is the color of your person's eyes?");
 
   let newArray = people.filter(function (el) {
     if(el.eyeColor == userInputEyeColor) {
-      return true;
+      filteredPeople.push(el);
     }
     // return true if el.height matches userInputHeight
   });
-
-  return newArray;
 }
-function searchByGender(people) {
+function searchByGender(people,filteredPeople) {
   let userInputGender = prompt("What is the gender?");
 
   let newArray = people.filter(function (el) {
     if(el.gender == userInputGender) {
-      return true;
+      filteredPeople.push(el);
     }
     // return true if el.height matches userInputHeight
   });
-
-  return newArray;
 }
-function searchOccupation(people) {
+function searchByOccupation(people, filteredPeople) {
   let userInputOccupation = prompt("What is your person occupation?");
 
   let newArray = people.filter(function (el) {
     if(el.occupation == userInputOccupation) {
-      return true;
+      filteredPeople.push(el);
     }
     // return true if el.height matches userInputHeight
   });
-
-  return newArray;
 }
-function searchByAge(people) {
+function searchByAge(people, filteredPeople) {
 
  let userInputAge = prompt("What is the age of the person you are looking for?");
 let filteredPeopleAge=[];
@@ -138,22 +145,22 @@ let dobInfo= el.dob.split("/");
 function userInputFilter(userSearchChoice,filteredPeople,people){
   switch(userSearchChoice) {
     case "height":
-      filteredPeople = searchByHeight(people,filteredPeople);
+      searchByHeight(people,filteredPeople);
       break;
     case "weight":
-      filteredPeople = searchByWeight(people);
+      searchByWeight(people,filteredPeople);
       break;
     case "eye color":
-      filteredPeople = searchByEyeColor(people);
+      searchByEyeColor(people, filteredPeople);
       break;
     case "gender":
-      filteredPeople = searchByGender(people);
+      searchByGender(people, filteredPeople);
       break;
     case "age":
-      filteredPeople = searchByAge(people);
+      searchByAge(people, filteredPeople);
       break;
     case "occupation":
-      filteredPeople = searchByOccupation(people);
+      searchByOccupation(people,filteredPeople);
       break;
     // so on and so forth
     default:
@@ -212,52 +219,48 @@ function searchByName(people){
 
 // alerts a list of people
 function displayPeople(people){
- let personInfo="";
- for(i=0;i<people.length;i++){
-  personInfo+= "First Name: " + people[i].firstName + "<br>";
-  personInfo+= "Last Name: " + people[i].lastName + "\n";
-  personInfo+= "gender: " + people[i].gender + "\n";
-  personInfo+= "dob: " + people[i].dob + "\n";
-  personInfo+= "height inches: " + people[i].height + "\n";
-  personInfo+= "weight lbs: " + people[i].weight + "\n";
-  personInfo+= "eyeColor: " + people[i].eyeColor + "\n";
-  personInfo+= "occupation: " + people[i].occupation + "\n";
-  personInfo+= "parents: " + people[i].parents + "\n";
-  personInfo+= "currentSpouse: " + people[i].currentSpouse + "\n";
-  personInfo+= "\n";
-  // TODO: finish getting the rest of the information to display
-  document.getElementById("peopleDisplay").innerHTML=personInfo;
-  }
+let personInfo="";
+for(i=0;i<people.length;i++){
+ personInfo+= "First Name: " + people[i].firstName + "<br>";
+ personInfo+= "Last Name: " + people[i].lastName + "<br>";
+ personInfo+= "Gender: " + people[i].gender + "<br>";
+ personInfo+= "DoB: " + people[i].dob + "<br>";
+ personInfo+= "Height in Inches: " + people[i].height + "<br>";
+ personInfo+= "Weight in Pounds: " + people[i].weight + "<br>";
+ personInfo+= "Eye Color: " + people[i].eyeColor + "<br>";
+ personInfo+= "Occupation: " + people[i].occupation + "<br>";
+ personInfo+= "Parents: " + people[i].parents + "<br>";
+ personInfo+= "Current Spouse: " + people[i].currentSpouse + "<br>";
+ personInfo+= "<br>";
+ // TODO: finish getting the rest of the information to display
+ document.getElementById("peopleDisplay").innerHTML=personInfo;
+ }
 }
 
 function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: " + person.firstName + "<br>";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  personInfo+= "gender: " + person.gender + "\n";
-  personInfo+= "dob: " + person.dob + "\n";
-  personInfo+= "height inches: " + person.height + "\n";
-  personInfo+= "weight lbs: " + person.weight + "\n";
-  personInfo+= "eyeColor: " + person.eyeColor + "\n";
-  personInfo+= "occupation: " + person.occupation + "\n";
-  personInfo+= "parents: " + person.parents + "\n";
-  personInfo+= "currentSpouse: " + person.currentSpouse + "\n";
-  personInfo+= "\n";
-  // TODO: finish getting the rest of the information to display
-  document.getElementById("peopleDisplay").innerHTML=personInfo;
+ // print all of the information about a person:
+ // height, weight, age, name, occupation, eye color.
+ var personInfo = "First Name: " + person[0].firstName + "<br>";
+ personInfo += "Last Name: " + person[0].lastName + "<br>";
+ personInfo+= "Gender: " + person[0].gender + "<br>";
+ personInfo+= "DoB: " + person[0].dob + "<br>";
+ personInfo+= "Height in Inches: " + person[0].height + "<br>";
+ personInfo+= "Weight in Pounds: " + person[0].weight + "<br>";
+ personInfo+= "Eye Color: " + person[0].eyeColor + "<br>";
+ personInfo+= "Occupation: " + person[0].occupation + "<br>";
+ personInfo+= "Parents: " + person[0].parents + "<br>";
+ personInfo+= "CurrentSpouse: " + person[0].currentSpouse + "<br>";
+ personInfo+= "<br>";
+ // TODO: finish getting the rest of the information to display
+ document.getElementById("peopleDisplay").innerHTML=personInfo;
 }
 
 function displayDescendants(person){
-  var personInfo = "First Name: " + person[0].firstName + "\n";
-  personInfo += "Last Name: " + person[0].lastName + "\n";
-  personInfo += "Descendants: " + getDescendants(person) + "\n";
+ var personInfo = "First Name: " + person[0].firstName + "<br>";
+ personInfo += "Last Name: " + person[0].lastName + "<br>";
+ personInfo += "Descendants: " + getDescendants(person) + "<br>";
 
-
-
-  alert(personInfo);
-
-
+ document.getElementById("peopleDisplay").innerHTML=personInfo;
 }
 
 function getDescendants (person){
