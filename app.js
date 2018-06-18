@@ -53,9 +53,9 @@ function traitSearcher(filteredPeople,People){
     }
     else{
       userInputFilter(userSearchChoice,filteredPeople,people);
-    }
     filteredPeople = peopleFilterDuplicates(filteredPeople);
     traitSearcher(filteredPeople,people)
+    }
   }
 }
 
