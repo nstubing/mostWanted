@@ -116,12 +116,11 @@ function searchByOccupation(people, filteredPeople) {
 function searchByAge(people, filteredPeople) {
 
  let userInputAge = prompt("What is the age of the person you are looking for?");
-let filteredPeopleAge=[];
 
  let ageArray = people.filter(function (el) {
  let age=getAge(el);
    if( userInputAge==age) {    //need to make sure we compare el.dob after we change it to age.
-     filteredPeopleAge.push(el);
+     filteredPeople.push(el);
    }
    // return true if el.height matches userInputHeight
  });
